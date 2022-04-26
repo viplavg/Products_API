@@ -7,7 +7,8 @@ http.createServer((req,res)=>{
 
     res.writeHead(200, {
         "Access-Control-Allow-Origin":"*",
-        "Access-Control-Allow-Headers": "*"
+        "Access-Control-Allow-Headers": "*",
+        "Access-Control-Allow-Methods": "DELETE,POST,PUT"
     });
 
     let products = fs.readFileSync("./data.json", {encoding:"utf-8"});
@@ -15,7 +16,10 @@ http.createServer((req,res)=>{
     let parsedURL = url.parse(req.url, true);
     let id = parsedURL.query.id;
     
-    if(req.method === "GET" && parsedURL.pathname==="/products"){
+    if(req.method==="OPTIONS"){
+        res.end();
+    }
+    else if(req.method === "GET" && parsedURL.pathname==="/products"){
         
         if(!id){
             res.write(products);
@@ -38,7 +42,7 @@ http.createServer((req,res)=>{
 
         if(!id){
 
-            res.write(JSON.stringify({message: "Product with entered Id does not exists."}));
+            res.write(JSON.stringify({message: "Product with entered Id does not exists.", success:false}));
 
         } else {
             let productIndex = product.findIndex((pro,index)=>{
@@ -49,7 +53,7 @@ http.createServer((req,res)=>{
 
             fs.writeFileSync("./data.json", JSON.stringify(product));
 
-            res.write(JSON.stringify({message: "Product Deleted."}));
+            res.write(JSON.stringify({message: "Product Deleted.", success:true}));
 
         }
 

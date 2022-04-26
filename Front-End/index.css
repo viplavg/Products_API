@@ -35,3 +35,30 @@ body {
 .icon:hover {
     opacity: 0.75;
 }
+
+.toast_message {
+    width: 250px;
+    position: fixed;
+    right: -300px;
+    bottom: 10px;
+    border-radius: 8px;
+    font-size: 17px;
+    padding: 12px;
+    
+    transition: 0.5s;
+}
+
+.modal-body {
+    display: flex;
+    flex-direction: column;
+    row-gap: 15px;
+}
+
+.success_msg {
+    background-color: #f5dfdf;
+    color: green;
+}
+.error_msg {
+    background-color: #efb8b8;
+    color: red;
+}
